@@ -3,272 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fogón Mates — Registro de Pedidos</title>
+<title>Fogón Mates — Pedidos</title>
+<!-- 4. Favicon -->
+<link rel="icon" type="image/png" href="logo2.png">
+<link rel="shortcut icon" href="logo2.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #F2EAD8;
-  --parchment: #E8DCC8;
-  --sand: #D4C4A0;
-  --brown-light: #8B6B4A;
-  --brown: #5C3D2E;
-  --brown-dark: #3A2419;
-  --ember: #C4622D;
-  --ember-dark: #8B3E1A;
-  --gold: #B8964E;
-  --gold-light: #D4AF70;
-  --text-dark: #2A1A10;
-  --green: #4CAF50;
-  --red: #e53935;
+  --cream:#F2EAD8; --parchment:#E8DCC8; --sand:#D4C4A0;
+  --brown-light:#8B6B4A; --brown:#5C3D2E; --brown-dark:#3A2419;
+  --ember:#C4622D; --ember-dark:#8B3E1A; --gold:#B8964E; --gold-light:#D4AF70;
+  --text-dark:#2A1A10; --green:#2e7d32; --red:#c62828;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  background: var(--cream);
-  font-family: 'Cormorant Garamond', serif;
-  color: var(--text-dark);
-  min-height: 100vh;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);font-family:'Cormorant Garamond',serif;color:var(--text-dark);min-height:100vh;}
+header{background:var(--brown-dark);padding:1rem 2rem;display:flex;align-items:center;gap:1rem;border-bottom:2px solid var(--gold);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,0.3);}
+header img{width:38px;height:38px;object-fit:contain;border-radius:50%;border:1.5px solid var(--gold);}
+.header-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream);}
+.header-sub{font-size:0.72rem;color:var(--gold-light);letter-spacing:0.1em;font-style:italic;}
+.container{max-width:1160px;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:390px 1fr;gap:1.8rem;}
+@media(max-width:820px){.container{grid-template-columns:1fr;}}
+.form-panel{background:var(--parchment);border:1px solid var(--sand);padding:1.6rem;position:sticky;top:76px;height:fit-content;box-shadow:4px 4px 20px rgba(58,36,25,0.1);}
+.panel-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--brown-dark);margin-bottom:1.3rem;padding-bottom:0.7rem;border-bottom:1px solid var(--sand);}
+.field{margin-bottom:1rem;}
+label{display:block;font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--brown);margin-bottom:0.3rem;font-weight:600;}
+select,input[type="text"],input[type="number"],input[type="date"],textarea{width:100%;padding:0.6rem 0.85rem;border:1.5px solid var(--sand);background:var(--cream);color:var(--text-dark);font-family:'Cormorant Garamond',serif;font-size:0.98rem;transition:border-color 0.2s;appearance:none;-webkit-appearance:none;}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--ember);}
+textarea{resize:vertical;min-height:60px;}
+.productos-label{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--brown);margin-bottom:0.4rem;font-weight:600;display:block;}
+.producto-item{display:grid;grid-template-columns:1fr 64px 28px;gap:0.4rem;margin-bottom:0.45rem;align-items:center;}
+.btn-add-producto{background:none;border:1.5px dashed var(--sand);color:var(--brown);font-family:'Cormorant Garamond',serif;font-size:0.82rem;letter-spacing:0.1em;padding:0.45rem;width:100%;cursor:pointer;transition:all 0.2s;margin-bottom:0.9rem;}
+.btn-add-producto:hover{border-color:var(--ember);color:var(--ember);}
+.btn-remove{background:none;border:none;color:var(--brown-light);cursor:pointer;font-size:1rem;line-height:1;padding:0 0.2rem;transition:color 0.2s;}
+.btn-remove:hover{color:var(--red);}
 
-/* ── HEADER ── */
-header {
-  background: var(--brown-dark);
-  padding: 1.2rem 2rem;
-  display: flex; align-items: center; gap: 1rem;
-  border-bottom: 2px solid var(--gold);
-  position: sticky; top: 0; z-index: 100;
-}
-header img { width: 40px; height: 40px; object-fit: contain; }
-.header-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem; font-weight: 900;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--cream);
-}
-.header-sub {
-  font-size: 0.75rem; color: var(--gold-light);
-  letter-spacing: 0.1em; font-style: italic;
-}
+/* PRECIOS INFO */
+.precio-info{background:var(--brown-dark);color:var(--cream);padding:0.85rem 1rem;margin:0.9rem 0;}
+.precio-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.2rem;}
+.precio-row:last-child{margin-bottom:0;padding-top:0.4rem;border-top:1px solid rgba(184,150,78,0.3);}
+.precio-lbl{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);opacity:0.8;}
+.precio-lbl-main{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold-light);}
+.precio-num{font-size:0.95rem;color:rgba(242,234,216,0.7);}
+.precio-num-main{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--gold-light);}
+.descuento-combo{font-size:0.72rem;color:#81c784;font-style:italic;margin-top:0.2rem;display:none;}
 
-/* ── LAYOUT ── */
-.container {
-  max-width: 1100px; margin: 0 auto;
-  padding: 2rem 1.5rem;
-  display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: 2rem;
-}
-@media (max-width: 800px) {
-  .container { grid-template-columns: 1fr; }
-}
+.btn-submit{width:100%;background:var(--ember);color:var(--cream);border:none;padding:0.95rem;font-family:'Playfair Display',serif;font-size:0.88rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;margin-top:0.4rem;}
+.btn-submit:hover{background:var(--ember-dark);}
+.btn-submit:disabled{background:var(--sand);cursor:not-allowed;}
+.config-box{background:rgba(58,36,25,0.05);border:1px solid var(--sand);padding:0.9rem;margin-bottom:1.3rem;}
+.config-box p{font-size:0.75rem;color:var(--brown);margin-bottom:0.45rem;font-style:italic;}
+.config-input{display:flex;gap:0.4rem;}
+.config-input input{flex:1;font-size:0.85rem;}
+.btn-save-config{background:var(--brown-dark);color:var(--cream);border:none;padding:0.6rem 0.9rem;font-family:'Cormorant Garamond',serif;font-size:0.78rem;letter-spacing:0.1em;cursor:pointer;white-space:nowrap;transition:background 0.2s;}
+.btn-save-config:hover{background:var(--ember);}
+.api-status{font-size:0.7rem;letter-spacing:0.08em;margin-top:0.35rem;font-style:italic;}
+.api-ok{color:var(--green);}.api-err{color:var(--red);}
+.table-panel{min-width:0;}
+.table-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.9rem;flex-wrap:wrap;gap:0.8rem;}
+.table-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--brown-dark);}
+.stats-row{display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+.stat-card{background:var(--parchment);border:1px solid var(--sand);padding:0.7rem 1rem;flex:1;min-width:110px;}
+.stat-card-label{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--brown-light);}
+.stat-card-val{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:900;color:var(--ember);}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:0.86rem;min-width:750px;}
+thead{background:var(--brown-dark);}
+th{padding:0.7rem 0.75rem;text-align:left;font-family:'Cormorant Garamond',serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold-light);font-weight:600;white-space:nowrap;}
+td{padding:0.6rem 0.75rem;border-bottom:1px solid var(--sand);vertical-align:middle;}
+tr:hover td{background:rgba(184,150,78,0.07);}
+tr:last-child td{border-bottom:none;}
+.badge{display:inline-block;padding:0.18rem 0.55rem;font-size:0.68rem;letter-spacing:0.08em;font-weight:700;border-radius:1px;}
+.badge-Pedido{background:#FFF3CD;color:#856404;}
+.badge-Confirmado{background:#D1ECF1;color:#0C5460;}
+.badge-Enviado{background:#D4EDDA;color:#155724;}
+.badge-Entregado{background:#C3E6CB;color:#155724;}
+.badge-Cancelado{background:#F8D7DA;color:#721C24;}
+.prod-tag{display:inline-block;background:var(--parchment);border:1px solid var(--sand);padding:0.08rem 0.35rem;margin:0.1rem;font-size:0.76rem;white-space:nowrap;}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--brown-light);font-style:italic;}
+.empty-icon{font-size:2.5rem;margin-bottom:0.8rem;opacity:0.35;}
 
-/* ── FORM PANEL ── */
-.form-panel {
-  background: var(--parchment);
-  border: 1px solid var(--sand);
-  padding: 1.8rem;
-  position: sticky; top: 80px;
-  height: fit-content;
-  box-shadow: 4px 4px 20px rgba(58,36,25,0.12);
-}
-.panel-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.15rem; font-weight: 700;
-  color: var(--brown-dark); margin-bottom: 1.5rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid var(--sand);
-  display: flex; align-items: center; gap: 0.5rem;
-}
+/* BOTÓN BORRAR */
+.btn-del{background:none;border:none;color:var(--brown-light);cursor:pointer;font-size:0.9rem;padding:0.2rem 0.4rem;transition:color 0.2s;line-height:1;}
+.btn-del:hover{color:var(--red);}
 
-/* ── FORM ELEMENTS ── */
-.field { margin-bottom: 1.1rem; }
-label {
-  display: block; font-size: 0.72rem;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--brown); margin-bottom: 0.35rem; font-weight: 600;
-}
-select, input[type="text"], input[type="number"], input[type="date"], textarea {
-  width: 100%; padding: 0.65rem 0.9rem;
-  border: 1.5px solid var(--sand);
-  background: var(--cream); color: var(--text-dark);
-  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
-  transition: border-color 0.2s;
-  appearance: none;
-}
-select:focus, input:focus, textarea:focus {
-  outline: none; border-color: var(--ember);
-}
-textarea { resize: vertical; min-height: 70px; }
-
-/* ITEMS DE PRODUCTO */
-.productos-label {
-  font-size: 0.72rem; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--brown);
-  margin-bottom: 0.5rem; font-weight: 600; display: block;
-}
-.producto-item {
-  display: grid; grid-template-columns: 1fr 70px;
-  gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;
-}
-.btn-add-producto {
-  background: none; border: 1.5px dashed var(--sand);
-  color: var(--brown); font-family: 'Cormorant Garamond', serif;
-  font-size: 0.85rem; letter-spacing: 0.1em;
-  padding: 0.5rem; width: 100%; cursor: pointer;
-  transition: all 0.2s; margin-bottom: 1rem;
-}
-.btn-add-producto:hover { border-color: var(--ember); color: var(--ember); }
-.btn-remove {
-  background: none; border: none; color: var(--brown-light);
-  cursor: pointer; font-size: 1.1rem; line-height: 1;
-  padding: 0 0.3rem; transition: color 0.2s;
-}
-.btn-remove:hover { color: var(--red); }
-
-/* PRECIO CALCULADO */
-.precio-calculado {
-  background: var(--brown-dark); color: var(--cream);
-  padding: 0.9rem 1rem; margin: 1rem 0;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.precio-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-light); }
-.precio-valor { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--gold-light); }
-
-.btn-submit {
-  width: 100%; background: var(--ember); color: var(--cream);
-  border: none; padding: 1rem; font-family: 'Playfair Display', serif;
-  font-size: 0.9rem; font-weight: 700; letter-spacing: 0.15em;
-  text-transform: uppercase; cursor: pointer; transition: background 0.2s;
-  margin-top: 0.5rem;
-}
-.btn-submit:hover { background: var(--ember-dark); }
-.btn-submit:disabled { background: var(--sand); cursor: not-allowed; }
-
-/* ── ESTADO CONFIG ── */
-.config-box {
-  background: rgba(58,36,25,0.06);
-  border: 1px solid var(--sand);
-  padding: 1rem; margin-bottom: 1.5rem;
-}
-.config-box p { font-size: 0.8rem; color: var(--brown); margin-bottom: 0.5rem; font-style: italic; }
-.config-input { display: flex; gap: 0.5rem; }
-.config-input input { flex: 1; }
-.btn-save-config {
-  background: var(--brown-dark); color: var(--cream);
-  border: none; padding: 0.65rem 1rem;
-  font-family: 'Cormorant Garamond', serif; font-size: 0.8rem;
-  letter-spacing: 0.1em; cursor: pointer; white-space: nowrap;
-  transition: background 0.2s;
-}
-.btn-save-config:hover { background: var(--ember); }
-.api-status {
-  font-size: 0.72rem; letter-spacing: 0.1em;
-  margin-top: 0.4rem; font-style: italic;
-}
-.api-ok { color: var(--green); }
-.api-err { color: var(--red); }
-
-/* ── RIGHT PANEL — TABLA ── */
-.table-panel { min-width: 0; }
-.table-header {
-  display: flex; justify-content: space-between;
-  align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;
-}
-.table-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.15rem; font-weight: 700; color: var(--brown-dark);
-}
-.stats-row {
-  display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;
-}
-.stat-card {
-  background: var(--parchment); border: 1px solid var(--sand);
-  padding: 0.8rem 1.2rem; flex: 1; min-width: 120px;
-}
-.stat-card-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brown-light); }
-.stat-card-val { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--ember); }
-
-.table-wrap { overflow-x: auto; }
-table {
-  width: 100%; border-collapse: collapse;
-  font-size: 0.88rem; min-width: 700px;
-}
-thead { background: var(--brown-dark); }
-th {
-  padding: 0.75rem 0.8rem; text-align: left;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.68rem; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--gold-light);
-  font-weight: 600; white-space: nowrap;
-}
-td { padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--sand); vertical-align: middle; }
-tr:hover td { background: rgba(184,150,78,0.08); }
-tr:last-child td { border-bottom: none; }
-
-.badge {
-  display: inline-block; padding: 0.2rem 0.6rem;
-  font-size: 0.7rem; letter-spacing: 0.1em; font-weight: 600;
-  border-radius: 1px;
-}
-.badge-pedido { background: #FFF3CD; color: #856404; }
-.badge-confirmado { background: #D1ECF1; color: #0C5460; }
-.badge-enviado { background: #D4EDDA; color: #155724; }
-.badge-entregado { background: #C3E6CB; color: #155724; }
-.badge-cancelado { background: #F8D7DA; color: #721C24; }
-
-.productos-cell { font-size: 0.82rem; line-height: 1.5; }
-.productos-cell .prod-tag {
-  display: inline-block; background: var(--parchment);
-  border: 1px solid var(--sand); padding: 0.1rem 0.4rem;
-  margin: 0.1rem; font-size: 0.78rem; white-space: nowrap;
-}
-
-.empty-state {
-  text-align: center; padding: 4rem 2rem;
-  color: var(--brown-light); font-style: italic;
-}
-.empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
-
-/* TOAST */
-.toast {
-  position: fixed; bottom: 2rem; right: 2rem;
-  background: var(--brown-dark); color: var(--cream);
-  padding: 1rem 1.5rem; border-left: 4px solid var(--gold);
-  font-size: 0.9rem; z-index: 9999;
-  transform: translateX(120%); transition: transform 0.3s ease;
-  max-width: 320px;
-}
-.toast.show { transform: translateX(0); }
-.toast.error { border-left-color: var(--red); }
-
-/* LOADER */
-.btn-submit .loader {
-  display: inline-block; width: 14px; height: 14px;
-  border: 2px solid rgba(255,255,255,0.4);
-  border-top-color: white; border-radius: 50%;
-  animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--brown-dark);color:var(--cream);padding:0.9rem 1.3rem;border-left:4px solid var(--gold);font-size:0.88rem;z-index:9999;transform:translateX(130%);transition:transform 0.3s ease;max-width:300px;}
+.toast.show{transform:translateX(0);}
+.toast.error{border-left-color:var(--red);}
+.btn-submit .loader{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:5px;}
+@keyframes spin{to{transform:rotate(360deg);}}
 </style>
 </head>
 <body>
 
 <header>
-  <img src="logo1.png" alt="Fogón Mates" onerror="this.style.display='none'">
+  <img src="logo1.png" alt="Fogón" onerror="this.style.display='none'">
   <div>
     <div class="header-title">Fogón Mates</div>
-    <div class="header-sub">Sistema de Registro de Pedidos</div>
+    <div class="header-sub">Registro de Pedidos</div>
   </div>
 </header>
 
 <div class="container">
 
-  <!-- FORM PANEL -->
+  <!-- FORM -->
   <div class="form-panel">
     <div class="panel-title">🧉 Nuevo Pedido</div>
 
-    <!-- CONFIG API -->
     <div class="config-box">
-      <p>📎 URL del Apps Script (Google Sheets)</p>
+      <p>🔗 URL del Apps Script</p>
       <div class="config-input">
         <input type="text" id="apiUrl" placeholder="https://script.google.com/macros/s/...">
         <button class="btn-save-config" onclick="saveApiUrl()">Guardar</button>
@@ -276,30 +118,38 @@ tr:last-child td { border-bottom: none; }
       <div class="api-status" id="apiStatus">Sin configurar</div>
     </div>
 
-    <!-- PRODUCTOS -->
-    <span class="productos-label">Productos del pedido</span>
+    <span class="productos-label">Productos</span>
     <div id="productosContainer"></div>
     <button class="btn-add-producto" onclick="addProductoRow()">+ Agregar producto</button>
 
-    <!-- PRECIO CALCULADO -->
-    <div class="precio-calculado">
-      <span class="precio-label">Importe calculado</span>
-      <span class="precio-valor" id="precioCalculado">$0</span>
+    <div class="precio-info">
+      <div class="precio-row">
+        <span class="precio-lbl">Subtotal</span>
+        <span class="precio-num" id="precioSubtotal">$0</span>
+      </div>
+      <div class="precio-row">
+        <span class="precio-lbl">Descuento combo</span>
+        <span class="precio-num" id="precioDescCombo" style="color:#81c784;">—</span>
+      </div>
+      <div class="precio-row">
+        <span class="precio-lbl">Descuento adicional</span>
+        <span class="precio-num" id="precioDescAdicional">—</span>
+      </div>
+      <div class="precio-row">
+        <span class="precio-lbl-main">Total final</span>
+        <span class="precio-num-main" id="precioTotal">$0</span>
+      </div>
     </div>
 
-    <!-- DATOS DEL PEDIDO -->
     <div class="field">
-      <label>Descuento</label>
+      <label>Descuento adicional ($)</label>
       <input type="number" id="descuento" placeholder="0" min="0" oninput="calcularPrecio()">
     </div>
     <div class="field">
       <label>Estado</label>
       <select id="estado">
-        <option value="Pedido">Pedido</option>
-        <option value="Confirmado">Confirmado</option>
-        <option value="Enviado">Enviado</option>
-        <option value="Entregado">Entregado</option>
-        <option value="Cancelado">Cancelado</option>
+        <option>Pedido</option><option>Confirmado</option>
+        <option>Enviado</option><option>Entregado</option><option>Cancelado</option>
       </select>
     </div>
     <div class="field">
@@ -312,66 +162,42 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div class="field">
       <label>Zona / Envío</label>
-      <input type="text" id="envio" placeholder="Ej: Belgrano, Capital, Nordelta...">
+      <input type="text" id="envio" placeholder="Ej: Belgrano, Nordelta...">
     </div>
     <div class="field">
       <label>Persona de contacto</label>
-      <input type="text" id="contacto" placeholder="Nombre completo">
+      <input type="text" id="contacto" placeholder="Nombre y apellido">
     </div>
     <div class="field">
       <label>Notas</label>
-      <textarea id="notas" placeholder="Observaciones, aclaraciones..."></textarea>
+      <textarea id="notas" placeholder="Observaciones..."></textarea>
     </div>
-
-    <button class="btn-submit" id="btnSubmit" onclick="submitPedido()">
-      Registrar Pedido
-    </button>
+    <button class="btn-submit" id="btnSubmit" onclick="submitPedido()">Registrar Pedido</button>
   </div>
 
-  <!-- TABLE PANEL -->
+  <!-- TABLA -->
   <div class="table-panel">
     <div class="table-header">
-      <div class="table-title">📋 Pedidos registrados</div>
-      <button onclick="loadPedidos()" style="background:none;border:1px solid var(--sand);padding:0.5rem 1rem;cursor:pointer;font-family:inherit;font-size:0.82rem;color:var(--brown);letter-spacing:0.1em;">↻ Actualizar</button>
+      <div class="table-title">📋 Pedidos</div>
+      <button onclick="loadPedidos()" style="background:none;border:1px solid var(--sand);padding:0.45rem 0.9rem;cursor:pointer;font-family:inherit;font-size:0.8rem;color:var(--brown);letter-spacing:0.1em;">↻ Actualizar</button>
     </div>
-
     <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-card-label">Total pedidos</div>
-        <div class="stat-card-val" id="statTotal">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-label">Entregados</div>
-        <div class="stat-card-val" id="statEntregados">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-label">Pendientes</div>
-        <div class="stat-card-val" id="statPendientes">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-label">Total facturado</div>
-        <div class="stat-card-val" id="statFacturado">—</div>
-      </div>
+      <div class="stat-card"><div class="stat-card-label">Total pedidos</div><div class="stat-card-val" id="statTotal">—</div></div>
+      <div class="stat-card"><div class="stat-card-label">Entregados</div><div class="stat-card-val" id="statEntregados">—</div></div>
+      <div class="stat-card"><div class="stat-card-label">Pendientes</div><div class="stat-card-val" id="statPendientes">—</div></div>
+      <div class="stat-card"><div class="stat-card-label">Total facturado</div><div class="stat-card-val" id="statFacturado">—</div></div>
     </div>
-
     <div class="table-wrap">
-      <table id="pedidosTable">
+      <table>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Productos</th>
-            <th>Importe</th>
-            <th>Descuento</th>
-            <th>Estado</th>
-            <th>F. Pedido</th>
-            <th>F. Entrega</th>
-            <th>Envío</th>
-            <th>Contacto</th>
-            <th>Notas</th>
+            <th>Borrar</th><th>#</th><th>Productos</th><th>Total</th>
+            <th>Desc. combo</th><th>Desc. extra</th><th>Estado</th>
+            <th>F. Pedido</th><th>F. Entrega</th><th>Zona</th><th>Contacto</th><th>Notas</th>
           </tr>
         </thead>
         <tbody id="pedidosTbody">
-          <tr><td colspan="10"><div class="empty-state"><div class="empty-icon">🧉</div>Configurá el Apps Script para ver los pedidos</div></td></tr>
+          <tr><td colspan="12"><div class="empty-state"><div class="empty-icon">🧉</div>Configurá el Apps Script para cargar pedidos</div></td></tr>
         </tbody>
       </table>
     </div>
@@ -381,275 +207,291 @@ tr:last-child td { border-bottom: none; }
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════════
-// CATÁLOGO DE PRODUCTOS Y PRECIOS
-// ══════════════════════════════════════════════
+// ── CATÁLOGO CON PRECIOS ──────────────────────────────────────
+// Precio individual vs precio en combo
+const PRECIOS_INDIVIDUALES = {
+  criollo:   17999,
+  torpedo:   23999,
+  camionero: 21500,
+  imperial:  27200,
+  vaquita:   39500,
+  yerbera:   14500,
+  bombilla:   6500,
+};
+
 const PRODUCTOS = [
-  // COMBOS (precio especial de combo)
-  { id: 'combo_criollo',    nombre: 'Combo Criollo + Bombilla',            precio: 21999,  tipo: 'Combo',      combo: true },
-  { id: 'combo_camionero',  nombre: 'Combo Camionero de Algarrobo + Bombilla', precio: 25500, tipo: 'Combo',   combo: true },
-  // MATES
-  { id: 'criollo',          nombre: 'Mate Criollo de Calabaza',            precio: 17999,  tipo: 'Calabaza'  },
-  { id: 'torpedo',          nombre: 'Torpedo con Virola de Acero',         precio: 23999,  tipo: 'Calabaza'  },
-  { id: 'camionero',        nombre: 'Camionero Clásico de Algarrobo',      precio: 21500,  tipo: 'Algarrobo' },
-  { id: 'imperial',         nombre: 'Imperial de Algarrobo Premium',       precio: 27200,  tipo: 'Algarrobo' },
-  { id: 'vaquita',          nombre: 'Mate Vaquita / Ranchero',             precio: 39500,  tipo: 'Algarrobo' },
-  // ACCESORIOS
-  { id: 'yerbera',          nombre: 'Yerbera de Gamuza',                   precio: 14500,  tipo: 'Accesorio' },
-  { id: 'bombilla',         nombre: 'Bombilla Pico de Loro (Inoxidable)',  precio: 6500,   tipo: 'Accesorio' },
+  // Combos (ya tienen el descuento incorporado)
+  { id:'combo_criollo',   nombre:'Combo Criollo + Bombilla',              precio:21999, precioSinCombo:17999+6500, tipo:'Combo',    combo:true },
+  { id:'combo_camionero', nombre:'Combo Camionero de Algarrobo + Bombilla', precio:25500, precioSinCombo:21500+6500, tipo:'Combo', combo:true },
+  // Mates individuales
+  { id:'criollo',   nombre:'Mate Criollo de Calabaza',          precio:17999, tipo:'Calabaza'  },
+  { id:'torpedo',   nombre:'Torpedo con Virola de Acero',       precio:23999, tipo:'Calabaza'  },
+  { id:'camionero', nombre:'Camionero Clásico de Algarrobo',    precio:21500, tipo:'Algarrobo' },
+  { id:'imperial',  nombre:'Imperial de Algarrobo Premium',     precio:27200, tipo:'Algarrobo' },
+  { id:'vaquita',   nombre:'Mate Vaquita / Ranchero',           precio:39500, tipo:'Algarrobo' },
+  // Accesorios
+  { id:'yerbera',  nombre:'Yerbera de Gamuza',                  precio:14500, tipo:'Accesorio' },
+  { id:'bombilla', nombre:'Bombilla Pico de Loro (Inoxidable)', precio:6500,  tipo:'Accesorio' },
 ];
 
-// ══════════════════════════════════════════════
-// ESTADO
-// ══════════════════════════════════════════════
 let pedidoCounter = 1;
 let pedidosLocales = [];
 
-// ══════════════════════════════════════════════
-// API CONFIG
-// ══════════════════════════════════════════════
+// ── API ───────────────────────────────────────────────────────
 function saveApiUrl() {
   const url = document.getElementById('apiUrl').value.trim();
   if (!url) return showToast('Ingresá la URL del Apps Script', true);
   localStorage.setItem('fogon_api_url', url);
   document.getElementById('apiStatus').textContent = '✓ URL guardada';
   document.getElementById('apiStatus').className = 'api-status api-ok';
-  showToast('URL guardada correctamente');
+  showToast('URL guardada ✓');
   loadPedidos();
 }
+function getApiUrl() { return localStorage.getItem('fogon_api_url') || ''; }
 
-function getApiUrl() {
-  return localStorage.getItem('fogon_api_url') || '';
-}
-
-// ══════════════════════════════════════════════
-// PRODUCTOS ROWS
-// ══════════════════════════════════════════════
-function addProductoRow(prodId = '', cant = 1) {
+// ── PRODUCTO ROWS ─────────────────────────────────────────────
+function addProductoRow(prodId='', cant=1) {
   const container = document.getElementById('productosContainer');
   const div = document.createElement('div');
   div.className = 'producto-item';
-
   const options = PRODUCTOS.map(p =>
-    `<option value="${p.id}" ${p.id === prodId ? 'selected' : ''}>${p.nombre} — $${p.precio.toLocaleString('es-AR')}</option>`
+    `<option value="${p.id}" ${p.id===prodId?'selected':''}>[${p.tipo}] ${p.nombre} — $${p.precio.toLocaleString('es-AR')}</option>`
   ).join('');
-
   div.innerHTML = `
     <select onchange="calcularPrecio()" class="prod-select">
-      <option value="">— Elegir producto —</option>
-      ${options}
+      <option value="">— Elegir —</option>${options}
     </select>
-    <input type="number" min="1" value="${cant}" class="prod-cant" placeholder="Cant."
-      style="padding:0.65rem 0.5rem;border:1.5px solid var(--sand);background:var(--cream);font-family:inherit;font-size:1rem;"
+    <input type="number" min="1" value="${cant}" class="prod-cant"
+      style="padding:0.6rem 0.4rem;border:1.5px solid var(--sand);background:var(--cream);font-family:inherit;font-size:0.95rem;text-align:center;"
       oninput="calcularPrecio()">
-    <button class="btn-remove" onclick="this.parentElement.remove(); calcularPrecio();">✕</button>
-  `;
+    <button class="btn-remove" onclick="this.parentElement.remove();calcularPrecio();">✕</button>`;
   container.appendChild(div);
   calcularPrecio();
 }
 
 function getProductosSeleccionados() {
-  const rows = document.querySelectorAll('.producto-item');
-  const result = [];
-  rows.forEach(row => {
-    const sel = row.querySelector('.prod-select').value;
+  return [...document.querySelectorAll('.producto-item')].reduce((acc, row) => {
+    const id = row.querySelector('.prod-select').value;
     const cant = parseInt(row.querySelector('.prod-cant').value) || 1;
-    if (sel) {
-      const prod = PRODUCTOS.find(p => p.id === sel);
-      if (prod) result.push({ ...prod, cantidad: cant });
+    if (id) {
+      const prod = PRODUCTOS.find(p => p.id === id);
+      if (prod) acc.push({ ...prod, cantidad: cant });
     }
-  });
-  return result;
+    return acc;
+  }, []);
 }
 
+// ── CALCULAR PRECIO CON DESCUENTO DE COMBO ───────────────────
 function calcularPrecio() {
   const prods = getProductosSeleccionados();
-  let total = 0;
+  let subtotalSinCombo = 0;
+  let subtotalConCombo = 0;
+  let descuentoComboTotal = 0;
 
-  // Agrupar: si hay un mate + bombilla que correspondan a un combo, usar precio combo
-  // Lógica: verificar si el usuario eligió directamente un combo
   prods.forEach(p => {
-    total += p.precio * p.cantidad;
+    const totalItem = p.precio * p.cantidad;
+    subtotalConCombo += totalItem;
+    if (p.combo) {
+      // Descuento = lo que valen por separado menos el precio combo
+      const ahorro = (p.precioSinCombo - p.precio) * p.cantidad;
+      descuentoComboTotal += ahorro;
+      subtotalSinCombo += p.precioSinCombo * p.cantidad;
+    } else {
+      subtotalSinCombo += totalItem;
+    }
   });
 
-  const descuento = parseFloat(document.getElementById('descuento').value) || 0;
-  const final = Math.max(0, total - descuento);
+  const descAdicional = parseFloat(document.getElementById('descuento').value) || 0;
+  const total = Math.max(0, subtotalConCombo - descAdicional);
 
-  document.getElementById('precioCalculado').textContent =
-    '$' + final.toLocaleString('es-AR', { minimumFractionDigits: 0 });
-  return { bruto: total, descuento, final };
+  // Mostrar desglose
+  document.getElementById('precioSubtotal').textContent = '$' + subtotalSinCombo.toLocaleString('es-AR');
+  document.getElementById('precioDescCombo').textContent = descuentoComboTotal > 0
+    ? '−$' + descuentoComboTotal.toLocaleString('es-AR') : '—';
+  document.getElementById('precioDescAdicional').textContent = descAdicional > 0
+    ? '−$' + descAdicional.toLocaleString('es-AR') : '—';
+  document.getElementById('precioTotal').textContent = '$' + total.toLocaleString('es-AR');
+
+  return { subtotalSinCombo, descuentoComboTotal, descAdicional, total };
 }
 
-// ══════════════════════════════════════════════
-// SUBMIT
-// ══════════════════════════════════════════════
+// ── SUBMIT — usando GET con parámetros (compatible con Apps Script) ──
 async function submitPedido() {
   const prods = getProductosSeleccionados();
-  if (prods.length === 0) return showToast('Agregá al menos un producto', true);
-
+  if (!prods.length) return showToast('Agregá al menos un producto', true);
   const contacto = document.getElementById('contacto').value.trim();
   if (!contacto) return showToast('Ingresá la persona de contacto', true);
 
-  const { bruto, descuento, final } = calcularPrecio();
-
+  const { subtotalSinCombo, descuentoComboTotal, descAdicional, total } = calcularPrecio();
   const productosStr = prods.map(p => `${p.nombre} x${p.cantidad}`).join(' | ');
-  const numeroPedido = '#' + pedidoCounter;
+  const numeroPedido = '#' + String(pedidoCounter).padStart(2, '0');
 
-  const data = {
-    action: 'addPedido',
+  const params = new URLSearchParams({
+    action:        'addPedido',
     numeroPedido,
-    productos: productosStr,
-    cantidad: prods.reduce((a, p) => a + p.cantidad, 0),
-    descuento: descuento || '',
-    estado: document.getElementById('estado').value,
-    fechaPedido: document.getElementById('fechaPedido').value,
-    fechaEntrega: document.getElementById('fechaEntrega').value,
-    importe: final,
-    envio: document.getElementById('envio').value,
+    productos:     productosStr,
+    cantidad:      prods.reduce((a, p) => a + p.cantidad, 0),
+    importe:       total,
+    descuentoCombo: descuentoComboTotal || '',
+    descuento:     descAdicional || '',
+    estado:        document.getElementById('estado').value,
+    fechaPedido:   document.getElementById('fechaPedido').value,
+    fechaEntrega:  document.getElementById('fechaEntrega').value,
+    envio:         document.getElementById('envio').value,
     contacto,
-    notas: document.getElementById('notas').value,
-  };
+    notas:         document.getElementById('notas').value,
+  });
 
   const btn = document.getElementById('btnSubmit');
   btn.disabled = true;
   btn.innerHTML = '<span class="loader"></span>Registrando...';
 
   const apiUrl = getApiUrl();
+  let ok = false;
+
   if (apiUrl) {
     try {
-      await fetch(apiUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      showToast(`✓ Pedido ${numeroPedido} registrado en Google Sheets`);
+      // Apps Script requiere GET para evitar CORS
+      const res = await fetch(`${apiUrl}?${params.toString()}`);
+      const json = await res.json();
+      ok = json.ok !== false;
+      if (ok) showToast(`✓ Pedido ${numeroPedido} guardado en Sheets`);
+      else showToast('Error en Sheets: ' + (json.error || 'desconocido'), true);
     } catch (e) {
-      showToast('Error al conectar con Google Sheets', true);
+      showToast('No se pudo conectar con Google Sheets', true);
     }
   } else {
-    showToast(`Pedido guardado localmente (configurá el Apps Script para sincronizar)`);
+    showToast('Pedido guardado localmente (configurá el Apps Script)');
+    ok = true;
   }
 
-  // Guardar local
-  pedidosLocales.unshift({ ...data, id: Date.now() });
-  pedidoCounter++;
-  renderTabla(pedidosLocales);
-  resetForm();
+  if (ok) {
+    // Guardar en local para mostrar en tabla
+    const pedido = {
+      id: Date.now(),
+      numeroPedido, productos: productosStr,
+      importe: total, descuentoCombo: descuentoComboTotal || '',
+      descuento: descAdicional || '',
+      estado: document.getElementById('estado').value,
+      fechaPedido: document.getElementById('fechaPedido').value,
+      fechaEntrega: document.getElementById('fechaEntrega').value,
+      envio: document.getElementById('envio').value,
+      contacto, notas: document.getElementById('notas').value,
+    };
+    pedidosLocales.unshift(pedido);
+    pedidoCounter++;
+    renderTabla(pedidosLocales);
+    resetForm();
+  }
 
   btn.disabled = false;
   btn.innerHTML = 'Registrar Pedido';
 }
 
-// ══════════════════════════════════════════════
-// RESET FORM
-// ══════════════════════════════════════════════
+// ── BORRAR PEDIDO ─────────────────────────────────────────────
+async function borrarPedido(id, numeroPedido) {
+  if (!confirm(`¿Borrar el pedido ${numeroPedido}? Esta acción no se puede deshacer.`)) return;
+
+  // Borrar local
+  pedidosLocales = pedidosLocales.filter(p => p.id !== id);
+  renderTabla(pedidosLocales);
+
+  // Borrar en Sheets
+  const apiUrl = getApiUrl();
+  if (apiUrl) {
+    try {
+      const params = new URLSearchParams({ action: 'deletePedido', numeroPedido });
+      await fetch(`${apiUrl}?${params.toString()}`);
+      showToast(`Pedido ${numeroPedido} eliminado`);
+    } catch(e) {
+      showToast('Eliminado localmente (no se pudo sincronizar)', true);
+    }
+  } else {
+    showToast(`Pedido ${numeroPedido} eliminado`);
+  }
+}
+
+// ── RESET ─────────────────────────────────────────────────────
 function resetForm() {
   document.getElementById('productosContainer').innerHTML = '';
   document.getElementById('descuento').value = '';
   document.getElementById('estado').value = 'Pedido';
-  document.getElementById('fechaPedido').value = '';
+  document.getElementById('fechaPedido').value = new Date().toISOString().split('T')[0];
   document.getElementById('fechaEntrega').value = '';
   document.getElementById('envio').value = '';
   document.getElementById('contacto').value = '';
   document.getElementById('notas').value = '';
-  document.getElementById('precioCalculado').textContent = '$0';
+  ['precioSubtotal','precioDescCombo','precioDescAdicional'].forEach(id => document.getElementById(id).textContent = '—');
+  document.getElementById('precioTotal').textContent = '$0';
   addProductoRow();
 }
 
-// ══════════════════════════════════════════════
-// LOAD PEDIDOS DESDE SHEETS
-// ══════════════════════════════════════════════
+// ── LOAD DESDE SHEETS ─────────────────────────────────────────
 async function loadPedidos() {
   const apiUrl = getApiUrl();
   if (!apiUrl) return;
-
   try {
-    const res = await fetch(apiUrl + '?action=getPedidos');
+    const res = await fetch(`${apiUrl}?action=getPedidos`);
     const json = await res.json();
     if (json.data) {
-      renderTabla(json.data);
+      // Mezclar con locales (evitar duplicados)
+      const numerosSheets = new Set(json.data.map(p => p.numeroPedido));
+      const soloLocales = pedidosLocales.filter(p => !numerosSheets.has(p.numeroPedido));
+      renderTabla([...soloLocales, ...json.data]);
     }
-  } catch (e) {
-    // silencioso — los pedidos locales siguen visibles
-  }
+  } catch(e) { /* silencioso */ }
 }
 
-// ══════════════════════════════════════════════
-// RENDER TABLA
-// ══════════════════════════════════════════════
+// ── RENDER TABLA ──────────────────────────────────────────────
 function renderTabla(pedidos) {
   const tbody = document.getElementById('pedidosTbody');
-
-  if (!pedidos || pedidos.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="10"><div class="empty-state"><div class="empty-icon">🧉</div>No hay pedidos todavía</div></td></tr>`;
+  if (!pedidos.length) {
+    tbody.innerHTML = `<tr><td colspan="12"><div class="empty-state"><div class="empty-icon">🧉</div>No hay pedidos todavía</div></td></tr>`;
     updateStats([]);
     return;
   }
-
   tbody.innerHTML = pedidos.map(p => {
-    const badge = badgeEstado(p.estado);
-    const prodsHtml = (p.productos || '').split('|').map(s =>
-      `<span class="prod-tag">${s.trim()}</span>`
-    ).join('');
-
+    const prodsHtml = (p.productos||'').split('|').map(s=>`<span class="prod-tag">${s.trim()}</span>`).join('');
     return `<tr>
-      <td><b>${p.numeroPedido || '—'}</b></td>
-      <td><div class="productos-cell">${prodsHtml || p.productos || '—'}</div></td>
-      <td><b>${formatPeso(p.importe)}</b></td>
-      <td>${p.descuento ? formatPeso(p.descuento) : '—'}</td>
-      <td>${badge}</td>
-      <td>${p.fechaPedido || '—'}</td>
-      <td>${p.fechaEntrega || '—'}</td>
-      <td>${p.envio || '—'}</td>
-      <td>${p.contacto || '—'}</td>
-      <td style="font-size:0.8rem;color:var(--brown-light)">${p.notas || ''}</td>
+      <td><button class="btn-del" onclick="borrarPedido(${p.id||0},'${p.numeroPedido}')" title="Borrar">🗑</button></td>
+      <td><b>${p.numeroPedido||'—'}</b></td>
+      <td style="min-width:180px">${prodsHtml||p.productos||'—'}</td>
+      <td><b>${fmt(p.importe)}</b></td>
+      <td style="color:#2e7d32">${p.descuentoCombo ? '−'+fmt(p.descuentoCombo) : '—'}</td>
+      <td>${p.descuento ? '−'+fmt(p.descuento) : '—'}</td>
+      <td><span class="badge badge-${p.estado||'Pedido'}">${p.estado||'Pedido'}</span></td>
+      <td>${p.fechaPedido||'—'}</td>
+      <td>${p.fechaEntrega||'—'}</td>
+      <td>${p.envio||'—'}</td>
+      <td>${p.contacto||'—'}</td>
+      <td style="font-size:0.78rem;color:var(--brown-light)">${p.notas||''}</td>
     </tr>`;
   }).join('');
-
   updateStats(pedidos);
 }
 
 function updateStats(pedidos) {
   document.getElementById('statTotal').textContent = pedidos.length;
-  document.getElementById('statEntregados').textContent = pedidos.filter(p => p.estado === 'Entregado').length;
-  document.getElementById('statPendientes').textContent = pedidos.filter(p => p.estado !== 'Entregado' && p.estado !== 'Cancelado').length;
-  const total = pedidos.reduce((a, p) => a + (parseFloat(p.importe) || 0), 0);
-  document.getElementById('statFacturado').textContent = total > 0 ? '$' + total.toLocaleString('es-AR', { minimumFractionDigits: 0 }) : '—';
+  document.getElementById('statEntregados').textContent = pedidos.filter(p=>p.estado==='Entregado').length;
+  document.getElementById('statPendientes').textContent = pedidos.filter(p=>p.estado!=='Entregado'&&p.estado!=='Cancelado').length;
+  const total = pedidos.reduce((a,p)=>a+(parseFloat(p.importe)||0),0);
+  document.getElementById('statFacturado').textContent = total>0 ? '$'+total.toLocaleString('es-AR',{minimumFractionDigits:0}) : '—';
 }
 
-function badgeEstado(estado) {
-  const map = {
-    'Pedido': 'badge-pedido',
-    'Confirmado': 'badge-confirmado',
-    'Enviado': 'badge-enviado',
-    'Entregado': 'badge-entregado',
-    'Cancelado': 'badge-cancelado',
-  };
-  return `<span class="badge ${map[estado] || 'badge-pedido'}">${estado || 'Pedido'}</span>`;
-}
-
-function formatPeso(val) {
+function fmt(val) {
   const n = parseFloat(val);
-  if (isNaN(n)) return '—';
-  return '$' + n.toLocaleString('es-AR', { minimumFractionDigits: 0 });
+  return isNaN(n) ? '—' : '$'+n.toLocaleString('es-AR',{minimumFractionDigits:0});
 }
 
-// ══════════════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════════════
-function showToast(msg, error = false) {
+function showToast(msg, error=false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast show' + (error ? ' error' : '');
-  setTimeout(() => { t.className = 'toast'; }, 3500);
+  t.className = 'toast show' + (error?' error':'');
+  setTimeout(()=>{ t.className='toast'; }, 3500);
 }
 
-// ══════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════
+// ── INIT ──────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
-  // Restaurar URL guardada
   const saved = localStorage.getItem('fogon_api_url');
   if (saved) {
     document.getElementById('apiUrl').value = saved;
@@ -657,12 +499,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('apiStatus').className = 'api-status api-ok';
     loadPedidos();
   }
-
-  // Fecha de hoy por defecto
-  const hoy = new Date().toISOString().split('T')[0];
-  document.getElementById('fechaPedido').value = hoy;
-
-  // Primera fila de producto
+  document.getElementById('fechaPedido').value = new Date().toISOString().split('T')[0];
   addProductoRow();
 });
 </script>
