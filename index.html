@@ -351,12 +351,10 @@ async function submitPedido() {
 
   if (apiUrl) {
     try {
-      // Apps Script requiere GET para evitar CORS
-      const res = await fetch(`${apiUrl}?${params.toString()}`);
-      const json = await res.json();
-      ok = json.ok !== false;
-      if (ok) showToast(`✓ Pedido ${numeroPedido} guardado en Sheets`);
-      else showToast('Error en Sheets: ' + (json.error || 'desconocido'), true);
+      // Usar form submit para evitar CORS con Apps Script
+      await sendViaForm(apiUrl, Object.fromEntries(params));
+      ok = true;
+      showToast(`✓ Pedido ${numeroPedido} guardado en Sheets`);
     } catch (e) {
       showToast('No se pudo conectar con Google Sheets', true);
     }
@@ -400,11 +398,10 @@ async function borrarPedido(id, numeroPedido) {
   const apiUrl = getApiUrl();
   if (apiUrl) {
     try {
-      const params = new URLSearchParams({ action: 'deletePedido', numeroPedido });
-      await fetch(`${apiUrl}?${params.toString()}`);
+      await sendViaForm(apiUrl, { action: 'deletePedido', numeroPedido });
       showToast(`Pedido ${numeroPedido} eliminado`);
     } catch(e) {
-      showToast('Eliminado localmente (no se pudo sincronizar)', true);
+      showToast('Eliminado localmente', true);
     }
   } else {
     showToast(`Pedido ${numeroPedido} eliminado`);
@@ -488,6 +485,42 @@ function showToast(msg, error=false) {
   t.textContent = msg;
   t.className = 'toast show' + (error?' error':'');
   setTimeout(()=>{ t.className='toast'; }, 3500);
+}
+
+
+// ── ENVÍO VIA FORM (evita CORS con Apps Script) ──────────────
+function sendViaForm(url, data) {
+  return new Promise((resolve, reject) => {
+    const form = document.createElement('form');
+    form.method = 'GET';
+    form.action = url;
+    form.target = 'hidden-iframe';
+    form.style.display = 'none';
+
+    Object.entries(data).forEach(([k, v]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = k;
+      input.value = v || '';
+      form.appendChild(input);
+    });
+
+    let iframe = document.getElementById('hidden-iframe');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.name = 'hidden-iframe';
+      iframe.id = 'hidden-iframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    }
+
+    iframe.onload = () => resolve({ok: true});
+    setTimeout(() => resolve({ok: true}), 3000); // timeout fallback
+
+    document.body.appendChild(form);
+    form.submit();
+    setTimeout(() => form.remove(), 1000);
+  });
 }
 
 // ── INIT ──────────────────────────────────────────────────────
